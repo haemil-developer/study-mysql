@@ -1,7 +1,6 @@
 package study.mysql.domain.member.repository;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -60,7 +59,7 @@ public class MemberRepository {
                 .usingGeneratedKeyColumns("id");
 
         SqlParameterSource params = new BeanPropertySqlParameterSource(member);
-        long id = simpleJdbcInsert.execute(params);
+        long id = simpleJdbcInsert.executeAndReturnKey(params).longValue();
         return Member.builder()
                 .id(id)
                 .email(member.getEmail())
@@ -71,7 +70,9 @@ public class MemberRepository {
     }
 
     public Member update(Member member) {
-        // TODO: implement
+        String sql = String.format("UPDATE %s SET email = :email, nickname = :nickname, birthday = :birthday WHERE id = :id", TABlE);
+        BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(member);
+        namedParameterJdbcTemplate.update(sql, params);
         return member;
     }
 }

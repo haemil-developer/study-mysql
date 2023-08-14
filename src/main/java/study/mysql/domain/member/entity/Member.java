@@ -40,7 +40,13 @@ public class Member {
         this.createdAt = createdAt == null ? LocalDateTime.now() : createdAt;
     }
 
-    void validateNickname(String nickname) {
+    public void changeNickname(String to) {
+        Objects.requireNonNull(to);
+        validateNickname(to);
+        nickname = to;
+    }
+
+   private void validateNickname(String nickname) {
         // Custom Exception 을 만들어서 throw 시키는 것도 좋은 방법임.
         Assert.isTrue( nickname.length() <= NAME_MAX_LENGTH, "최대 길이를 초과했습니다.");
     }

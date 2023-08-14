@@ -4,12 +4,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import study.mysql.domain.member.dto.RegisterMemberCommand;
 import study.mysql.domain.member.entity.Member;
+import study.mysql.domain.member.entity.MemberNicknameRecord;
+import study.mysql.domain.member.repository.MemberNicknameRecordRepository;
 import study.mysql.domain.member.repository.MemberRepository;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class MemberWriteService {
     final private MemberRepository memberRepository;
+
+    final private MemberNicknameRecordRepository memberNicknameRecordRepository;
 
     public Member register(RegisterMemberCommand command) {
         /*
@@ -26,6 +32,31 @@ public class MemberWriteService {
                 .email(command.email())
                 .birthday(command.birthday())
                 .build();
-        return memberRepository.save(member);
+
+        Member savedMember = memberRepository.save(member);
+        saveMemberNicknameRecord(savedMember);
+        return savedMember;
+    }
+
+    public void changeNicknames(Long memberId, String nickname) {
+        /*
+            1. 회원의 닉네임을 변경
+            2. 변경 내역을 저장
+         */
+        Member member = memberRepository.findById(memberId).orElseThrow();
+        member.changeNickname(nickname);
+        Member savedMember = memberRepository.save(member);
+
+        saveMemberNicknameRecord(savedMember);
+    }
+
+    private void saveMemberNicknameRecord(Member member) {
+        MemberNicknameRecord memberNicknameRecord = MemberNicknameRecord
+                .builder()
+                .memberId(member.getId())
+                .nickname(member.getNickname())
+                .build();
+
+        memberNicknameRecordRepository.save(memberNicknameRecord);
     }
 }
