@@ -8,8 +8,6 @@ import study.mysql.domain.member.entity.MemberNicknameRecord;
 import study.mysql.domain.member.repository.MemberNicknameRecordRepository;
 import study.mysql.domain.member.repository.MemberRepository;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class MemberWriteService {

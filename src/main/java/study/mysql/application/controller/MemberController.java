@@ -1,4 +1,4 @@
-package study.mysql.controller;
+package study.mysql.application.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +12,7 @@ import study.mysql.domain.member.service.MemberWriteService;
 import java.util.List;
 
 @RestController
+@RequestMapping("/members")
 @RequiredArgsConstructor
 public class MemberController {
 
@@ -19,13 +20,13 @@ public class MemberController {
 
     final public MemberReadService memberReadService;
 
-    @PostMapping("/members")
+    @PostMapping("")
     public MemberDto register(@RequestBody RegisterMemberCommand command) {
         Member member = memberWriteService.register(command);
         return memberReadService.toDto(member);
     }
 
-    @GetMapping("/members/{id}")
+    @GetMapping("/{id}")
     public MemberDto getMember(@PathVariable Long id) {
         return memberReadService.getMember(id);
     }
