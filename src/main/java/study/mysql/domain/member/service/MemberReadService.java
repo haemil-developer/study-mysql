@@ -10,6 +10,7 @@ import study.mysql.domain.member.repository.MemberNicknameRecordRepository;
 import study.mysql.domain.member.repository.MemberRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,12 +24,19 @@ public class MemberReadService {
         return toDto(member);
     }
 
+    public List<MemberDto> getMembers(List<Long> memberIds) {
+        var members = memberRepository.findAllByIdIn(memberIds);
+        return members.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
     public List<MemberNicknameRecordDto> getMemberNicknameRecords(Long memberId) {
         return memberNicknameRecordRepository
                 .findAllByMemberId(memberId)
                 .stream()
                 .map(this::toDto)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public MemberDto toDto(Member member) {
