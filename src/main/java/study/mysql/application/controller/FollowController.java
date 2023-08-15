@@ -9,7 +9,7 @@ import study.mysql.domain.member.dto.MemberDto;
 import java.util.List;
 
 @RestController
-@RequestMapping("/follow")
+@RequestMapping("/follows")
 @RequiredArgsConstructor
 public class FollowController {
     final private CreateFollowMemberUsecase createFollowMemberUsecase;

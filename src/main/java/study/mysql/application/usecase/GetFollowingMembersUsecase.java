@@ -8,6 +8,7 @@ import study.mysql.domain.member.dto.MemberDto;
 import study.mysql.domain.member.service.MemberReadService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -16,8 +17,8 @@ public class GetFollowingMembersUsecase {
     final private FollowReadService followReadService;
 
     public List<MemberDto> execute(Long memberId) {
-        var followings = followReadService.getFollowings(memberId);
-        var followingMemberIds = followings.stream().map(Follow::getToMemberId).toList();
+        List<Follow> followings = followReadService.getFollowings(memberId);
+        List<Long> followingMemberIds = followings.stream().map(Follow::getToMemberId).collect(Collectors.toList());
         return memberReadService.getMembers(followingMemberIds);
     }
 }
