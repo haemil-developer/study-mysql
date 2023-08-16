@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class FollowReadService {
-    final private FollowRepository followRepository;
+    private final FollowRepository followRepository;
 
     public List<Follow> getFollowings(Long memberId) {
         return followRepository.findAllByFromMemberId(memberId);

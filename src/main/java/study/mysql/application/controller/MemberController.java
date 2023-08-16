@@ -16,9 +16,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberController {
 
-    final public MemberWriteService memberWriteService;
+    private final MemberWriteService memberWriteService;
 
-    final public MemberReadService memberReadService;
+    private final MemberReadService memberReadService;
 
     @PostMapping("")
     public MemberDto register(@RequestBody RegisterMemberCommand command) {

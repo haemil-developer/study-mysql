@@ -12,7 +12,7 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class FollowWriteService {
-    final private FollowRepository followRepository;
+    private final FollowRepository followRepository;
 
     public void crate(MemberDto fromMember, MemberDto toMember) {
         /*

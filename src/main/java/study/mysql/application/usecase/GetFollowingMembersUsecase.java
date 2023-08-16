@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class GetFollowingMembersUsecase {
-    final private MemberReadService memberReadService;
-    final private FollowReadService followReadService;
+    private final MemberReadService memberReadService;
+    private final FollowReadService followReadService;
 
     public List<MemberDto> execute(Long memberId) {
         List<Follow> followings = followReadService.getFollowings(memberId);

@@ -17,9 +17,9 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class MemberNicknameRecordRepository {
-    final private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    static final private String TABlE = "MemberNicknameRecord";
+    private static final String TABlE = "MemberNicknameRecord";
 
     static final RowMapper<MemberNicknameRecord> rowMapper = (ResultSet resultSet, int rowNum) -> MemberNicknameRecord
             .builder()
