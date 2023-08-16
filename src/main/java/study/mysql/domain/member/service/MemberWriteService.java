@@ -11,9 +11,9 @@ import study.mysql.domain.member.repository.MemberRepository;
 @Service
 @RequiredArgsConstructor
 public class MemberWriteService {
-    final private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
-    final private MemberNicknameRecordRepository memberNicknameRecordRepository;
+    private final MemberNicknameRecordRepository memberNicknameRecordRepository;
 
     public Member register(RegisterMemberCommand command) {
         /*

@@ -13,8 +13,8 @@ import study.mysql.domain.member.service.MemberReadService;
 @Service
 @RequiredArgsConstructor
 public class CreateFollowMemberUsecase {
-    final private MemberReadService memberReadService;
-    final private FollowWriteService followWriteService;
+    private final MemberReadService memberReadService;
+    private final FollowWriteService followWriteService;
 
     public void execute(Long fromMemberId, Long toMemberId) {
         /*

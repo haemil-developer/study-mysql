@@ -12,8 +12,8 @@ import java.util.List;
 @RequestMapping("/follows")
 @RequiredArgsConstructor
 public class FollowController {
-    final private CreateFollowMemberUsecase createFollowMemberUsecase;
-    final private GetFollowingMembersUsecase getFollowingMembersUsacase;
+    private final CreateFollowMemberUsecase createFollowMemberUsecase;
+    private final GetFollowingMembersUsecase getFollowingMembersUsacase;
 
     @PostMapping("/{fromId}/{toId}")
     public void create(@PathVariable Long fromId, @PathVariable Long toId) {

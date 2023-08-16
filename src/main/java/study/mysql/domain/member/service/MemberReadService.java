@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class MemberReadService {
-    final private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
-    final private MemberNicknameRecordRepository memberNicknameRecordRepository;
+    private final MemberNicknameRecordRepository memberNicknameRecordRepository;
 
     public MemberDto getMember(Long id) {
         Member member = memberRepository.findById(id).orElseThrow();
