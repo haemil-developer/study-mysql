@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
-import study.mysql.domain.PageHelper;
+import study.mysql.domain.util.PageHelper;
 import study.mysql.domain.post.dto.DailyPostCount;
 import study.mysql.domain.post.dto.DailyPostCountRequest;
 import study.mysql.domain.post.entity.Post;
@@ -90,7 +90,6 @@ public class PostRepository {
     }
 
     public Page<Post> findAllByMemberId(Long memberId, Pageable pageable) {
-        Pageable pageRequest;
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("memberId", memberId)
                 .addValue("size", pageable.getPageSize())
@@ -116,5 +115,38 @@ public class PostRepository {
                 """, TABLE);
         MapSqlParameterSource params = new MapSqlParameterSource("memberId", memberId);
         return namedParameterJdbcTemplate.queryForObject(sql, params, Long.class);
+    }
+
+    public List<Post> findAllByMemberIdAndOrderByIdDesc(Long memberId, int size) {
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("memberId", memberId)
+                .addValue("size", size);
+
+        String sql = String.format("""
+                SELECT *
+                FROM %s
+                WHERE memberId =: memberId
+                ORDER BY id DESC
+                LIMIT :size
+                """, TABLE);
+
+        return namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER);
+    }
+
+    public List<Post> findAllByLessThanIdMemberIdAndOrderByIdDesc(Long id, Long memberId, int size) {
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("memberId", memberId)
+                .addValue("id", id)
+                .addValue("size", size);
+
+        String sql = String.format("""
+                SELECT *
+                FROM %s
+                WHERE memberId =: memberId AND id < :id
+                ORDER BY id DESC
+                LIMIT :size
+                """, TABLE);
+
+        return namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER);
     }
 }
